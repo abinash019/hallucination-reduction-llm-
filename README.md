@@ -1,176 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hallucination Reduction System</title>
+<h1>🧠 Hallucination Reduction System (RAG + NLI Verification)</h1>
 
-  <!-- Bootstrap CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<p>
+A research-grade AI system that reduces hallucinations in Large Language Models using 
+<strong>Retrieval-Augmented Generation (RAG)</strong> and 
+<strong>Natural Language Inference (NLI)</strong> verification.
+</p>
 
-  <style>
-    body {
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      margin-top: 40px;
-      margin-bottom: 40px;
-    }
-    .card {
-      background: #1e293b;
-      border: none;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-    .title {
-      font-size: 2.2rem;
-      font-weight: bold;
-    }
-    pre {
-      background: #0b1220;
-      padding: 15px;
-      border-radius: 10px;
-      color: #38bdf8;
-    }
-    .badge-custom {
-      background: #38bdf8;
-      color: #000;
-      margin-right: 5px;
-    }
-  </style>
-</head>
+<hr>
 
-<body>
+<h2>🚀 Overview</h2>
 
-<div class="container">
+<p>
+This project builds a <b>truth-grounded AI question answering system</b> that ensures responses are:
+</p>
 
-  <div class="text-center mb-5">
-    <h1 class="title">🧠 Hallucination Reduction System</h1>
-    <p class="lead">
-      Retrieval-Augmented Generation (RAG) + NLI Verification System for grounded AI responses
-    </p>
+<ul>
+  <li>Retrieved from real documents</li>
+  <li>Generated strictly from context</li>
+  <li>Verified for factual correctness</li>
+</ul>
 
-    <span class="badge badge-custom">Python</span>
-    <span class="badge badge-custom">LangChain</span>
-    <span class="badge badge-custom">FAISS</span>
-    <span class="badge badge-custom">HuggingFace</span>
-    <span class="badge badge-custom">FastAPI</span>
-  </div>
+<hr>
 
-  <div class="card p-4">
-    <h3>🚀 Overview</h3>
-    <p>
-      This system reduces hallucinations in LLMs using a 3-stage pipeline:
-      Retrieval → Generation → Verification.
-    </p>
-  </div>
+<h2>⚙️ System Architecture</h2>
 
-  <div class="card p-4">
-    <h3>⚙️ Architecture</h3>
-    <pre>
+<pre>
 User Query
    ↓
-Retriever (FAISS + Embeddings)
+Retriever (FAISS + HuggingFace Embeddings)
    ↓
-Generator (LLM)
+Relevant Documents
    ↓
-Verifier (NLI - RoBERTa)
+Generator (LLM with strict prompting)
    ↓
-Final Verified Answer
-    </pre>
-  </div>
+Answer
+   ↓
+Verifier (NLI - RoBERTa MNLI)
+   ↓
+Final Verified Response
+</pre>
 
-  <div class="card p-4">
-    <h3>🧩 Core Components</h3>
+<hr>
 
-    <h5>🔎 Retriever</h5>
-    <ul>
-      <li>FAISS vector search</li>
-      <li>HuggingFace embeddings</li>
-    </ul>
+<h2>🧩 Core Components</h2>
 
-    <h5>🧠 Generator</h5>
-    <ul>
-      <li>LLM-based response generation</li>
-      <li>Strict context-only prompting</li>
-    </ul>
+<h3>🔎 Retriever</h3>
+<ul>
+  <li>FAISS vector database for similarity search</li>
+  <li>HuggingFace embeddings for semantic encoding</li>
+  <li>Retrieves most relevant documents</li>
+</ul>
 
-    <h5>✅ Verifier</h5>
-    <ul>
-      <li>NLI (Natural Language Inference)</li>
-      <li>Detects hallucination vs grounded answers</li>
-    </ul>
-  </div>
+<h3>🧠 Generator</h3>
+<ul>
+  <li>HuggingFace Transformer-based LLM</li>
+  <li>Strict prompt engineering (context-only answers)</li>
+  <li>Prevents hallucination by design</li>
+</ul>
 
-  <div class="card p-4">
-    <h3>🛠️ Tech Stack</h3>
-    <ul>
-      <li>Python 3.10+</li>
-      <li>LangChain</li>
-      <li>FAISS</li>
-      <li>Transformers (HuggingFace)</li>
-      <li>PyTorch</li>
-      <li>FastAPI</li>
-    </ul>
-  </div>
+<h3>✅ Verifier (Core Innovation)</h3>
+<ul>
+  <li>Natural Language Inference (NLI)</li>
+  <li>Model: RoBERTa MNLI</li>
+  <li>Classifies:</li>
+  <ul>
+    <li>ENTAILMENT → Correct</li>
+    <li>CONTRADICTION → Hallucination</li>
+    <li>NEUTRAL → Uncertain</li>
+  </ul>
+</ul>
 
-  <div class="card p-4">
-    <h3>📁 Project Structure</h3>
-    <pre>
+<hr>
+
+<h2>🛠️ Tech Stack</h2>
+
+<ul>
+  <li>Python 3.10+</li>
+  <li>LangChain</li>
+  <li>HuggingFace Transformers</li>
+  <li>FAISS Vector DB</li>
+  <li>PyTorch</li>
+  <li>FastAPI</li>
+</ul>
+
+<hr>
+
+<h2>📁 Project Structure</h2>
+
+<pre>
 app/
- ├── services/
- │    ├── retriever.py
- │    ├── generator.py
- │    ├── verifier.py
- │    └── pipeline.py
- ├── models/
- ├── utils/
- ├── main.py
- ├── config.py
+├── services/
+│   ├── retriever.py
+│   ├── generator.py
+│   ├── verifier.py
+│   └── pipeline.py
+├── models/
+├── utils/
+├── main.py
+├── config.py
 
 data/
- ├── raw/
- ├── embeddings/
-    </pre>
-  </div>
+├── raw/
+├── processed/
+├── embeddings/
 
-  <div class="card p-4">
-    <h3>🔥 Features</h3>
-    <ul>
-      <li>RAG-based retrieval system</li>
-      <li>Hallucination detection using NLI</li>
-      <li>Context-grounded LLM responses</li>
-      <li>FAISS semantic search</li>
-      <li>FastAPI backend</li>
-    </ul>
-  </div>
+requirements.txt
+README.md
+</pre>
 
-  <div class="card p-4">
-    <h3>📊 Workflow</h3>
-    <ol>
-      <li>User asks question</li>
-      <li>Retriever finds documents</li>
-      <li>Generator creates answer</li>
-      <li>Verifier validates correctness</li>
-      <li>Final response returned</li>
-    </ol>
-  </div>
+<hr>
 
-  <div class="card p-4">
-    <h3>🎯 Goal</h3>
-    <p>
-      To eliminate hallucinations in LLMs by enforcing:
-      retrieval grounding, controlled generation, and verification layer.
-    </p>
-  </div>
+<h2>🔥 Features</h2>
 
-  <div class="card p-4 text-center">
-    <h3>⭐ Support</h3>
-    <p>If you like this project, give it a star on GitHub.</p>
-  </div>
+<ul>
+  <li>RAG-based retrieval system</li>
+  <li>LLM grounded generation</li>
+  <li>NLI-based hallucination detection</li>
+  <li>FAISS fast semantic search</li>
+  <li>Modular architecture</li>
+  <li>FastAPI backend ready</li>
+</ul>
 
-</div>
+<hr>
 
-</body>
-</html>
+<h2>📊 Workflow</h2>
+
+<ol>
+  <li>User asks a question</li>
+  <li>Retriever fetches relevant documents</li>
+  <li>Generator creates answer from context only</li>
+  <li>Verifier checks correctness</li>
+  <li>Final verified response is returned</li>
+</ol>
+
+<hr>
+
+<h2>🎯 Goal</h2>
+
+<p>
+Reduce hallucinations in LLM outputs by enforcing:
+</p>
+
+<ul>
+  <li>Retrieval grounding</li>
+  <li>Context-only generation</li>
+  <li>Independent verification layer</li>
+</ul>
+
+<hr>
+
+<h2>📦 Installation</h2>
+
+<pre>
+git clone &lt;repo-url&gt;
+cd hallucination-reduction-system
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+</pre>
+
+<hr>
+
+<h2>▶️ Run API</h2>
+
+<pre>
+uvicorn app.main:app --reload
+</pre>
+
+<hr>
+
+<h2>📌 Future Improvements</h2>
+
+<ul>
+  <li>Confidence scoring system</li>
+  <li>Multi-hop retrieval</li>
+  <li>Fine-tuned verifier model</li>
+  <li>Frontend UI dashboard</li>
+</ul>
+
+<hr>
+
+<h2>👨‍💻 Author</h2>
+
+<p>
+Built as a research project focused on reducing hallucinations in LLMs using RAG + NLI verification.
+</p>
+
+<hr>
+
+<h2>⭐ Support</h2>
+
+<p>If you like this project, give it a ⭐ on GitHub.</p>
