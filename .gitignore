@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+
+# Data / models
+data/embeddings/
+data/raw/
+models/downloaded/
+
+# OS
+.DS_Store
