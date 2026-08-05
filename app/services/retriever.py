@@ -4,8 +4,9 @@ How it works: Convert query to vector → Search similar vectors → Return rele
 """
 
 from typing import List
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
+from pathlib import Path
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.schema import Document
 from app.config import config
 import logging
@@ -34,6 +35,9 @@ class RetrieverService:
         # Step 2: Load FAISS vector store
         # FAISS stores vectors and enables fast similarity search
         try:
+            if not Path(config.VECTOR_STORE_PATH).exists():
+                raise ValueError(
+                    "FAISS index not found. Run build_index.py first")
             self.vector_store = FAISS.load_local(
                 str(config.VECTOR_STORE_PATH),
                 self.embeddings,

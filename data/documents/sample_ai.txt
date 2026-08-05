@@ -1,0 +1,6 @@
+
+        Artificial Intelligence (AI) is intelligence demonstrated by machines.
+        Machine Learning is a subset of AI where systems learn from data.
+        Deep Learning uses neural networks with many layers.
+        Natural Language Processing (NLP) helps AI understand human language.
+        
